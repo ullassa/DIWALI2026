@@ -24,6 +24,7 @@ export class App implements OnDestroy {
   protected readonly litDiyas = signal<Set<number>>(new Set());
   protected readonly sparks = signal<Spark[]>([]);
   protected readonly introVisible = signal(true);
+  protected readonly visitorName = signal('');
   protected readonly musicOn = signal(false);
   protected readonly isReducedMotion = signal(false);
   protected readonly selectedCracker = signal<CrackerType>('aerial');
@@ -36,12 +37,23 @@ export class App implements OnDestroy {
 
   private sparkId = 0;
   constructor() {
-    this.isReducedMotion.set(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this.isReducedMotion.set(
+      typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    );
   }
 
   protected enterCelebration(): void {
     this.introVisible.set(false);
     document.body.classList.add('celebration-entered');
+  }
+
+  protected updateVisitorName(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.visitorName.set(input.value);
+  }
+
+  protected get greetingName(): string {
+    return this.visitorName().trim() || 'friend';
   }
 
   protected lightDiya(index: number): void {
@@ -66,16 +78,16 @@ export class App implements OnDestroy {
   }
 
   protected celebrate(type: CrackerType = this.selectedCracker()): void {
-    const burstCount = type === 'fountain' ? 4 : type === 'rocket' ? 5 : this.isReducedMotion() ? 3 : 7;
+    const burstCount = this.isReducedMotion() ? 3 : type === 'fountain' ? 8 : type === 'rocket' ? 10 : 12;
     for (let index = 0; index < burstCount; index += 1) {
       window.setTimeout(() => this.createCrackerSparks(type), index * (type === 'rocket' ? 320 : 240));
     }
   }
 
   private createCrackerSparks(type: CrackerType): void {
-    const count = this.isReducedMotion() ? 8 : type === 'fountain' ? 18 : type === 'chakra' ? 16 : 24;
+    const count = this.isReducedMotion() ? 8 : type === 'fountain' ? 38 : type === 'chakra' ? 42 : 52;
     const y = type === 'fountain' ? 58 + Math.random() * 22 : type === 'rocket' ? 12 + Math.random() * 30 : 18 + Math.random() * 50;
-    this.createSparks(count, undefined, y);
+    this.createSparks(count, undefined, y, 1.6);
   }
 
   protected toggleMusic(): void {
@@ -93,13 +105,13 @@ export class App implements OnDestroy {
     player?.contentWindow?.postMessage(JSON.stringify({ event: 'command', func, args: [] }), '*');
   }
 
-  private createSparks(count: number, diyaIndex?: number, fixedY?: number): void {
+  private createSparks(count: number, diyaIndex?: number, fixedY?: number, sizeMultiplier = 1): void {
     const created = Array.from({ length: count }, () => ({
       id: this.sparkId++,
       x: diyaIndex === undefined ? 10 + Math.random() * 80 : 24 + diyaIndex * 8 + Math.random() * 5,
       y: fixedY ?? (diyaIndex === undefined ? 20 + Math.random() * 48 : 65 + Math.random() * 10),
       hue: Math.random() > 0.3 ? 'gold' as const : 'amber' as const,
-      size: 2 + Math.random() * 5,
+      size: (2 + Math.random() * 5) * sizeMultiplier,
       delay: Math.random() * 0.4,
     }));
     this.sparks.update((sparks) => [...sparks, ...created]);

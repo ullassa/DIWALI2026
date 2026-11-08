@@ -12,6 +12,18 @@
       <p class="eyebrow">A family celebration · 2026</p>
       <h1>The festival<br /><em>of lights</em></h1>
       <p class="intro-line">Something beautiful happens when<br class="desktop-only" /> we celebrate together.</p>
+      <label class="name-field">
+        <span>What is your name?</span>
+        <input
+          type="text"
+          name="visitorName"
+          autocomplete="name"
+          maxlength="40"
+          placeholder="Your name"
+          [value]="visitorName()"
+          (input)="updateVisitorName($event)"
+          (keydown.enter)="enterCelebration()" />
+      </label>
       <button class="gold-button intro-button" type="button" (click)="enterCelebration()">
         Enter the celebration <span>↗</span>
       </button>
@@ -57,7 +69,7 @@
       <p class="eyebrow reveal-delay-1">To the ones who make every day brighter</p>
       <p class="devanagari reveal-delay-2">ಶುಭ ದೀಪಾವಳಿ</p>
       <h2 class="hero-title reveal-delay-3">Happy <em>Diwali</em></h2>
-      <p class="hero-subtitle reveal-delay-4">A celebration of light, love,<br class="mobile-only" /> happiness &amp; togetherness.</p>
+      <p class="hero-subtitle reveal-delay-4">Welcome, {{ greetingName }}.<br />A celebration of light, love,<br class="mobile-only" /> happiness &amp; togetherness.</p>
       <div class="hero-signature reveal-delay-5"><span></span> With love, from our family <b>♥</b> <span></span></div>
     </div>
     <div class="hero-diya diya-left" aria-hidden="true"><span class="flame"></span><span class="bowl"></span></div>
@@ -95,7 +107,7 @@
     </div>
     <div class="wish-copy">
       <p class="eyebrow">A note from the heart · 02</p>
-      <h2>A little light,<br /><em>a lot of love</em></h2>
+      <h2>{{ greetingName }}, a little light,<br /><em>a lot of love</em></h2>
       <div class="gold-line"></div>
       <p class="wish-kannada">ದೀಪಾವಳಿ ಎಂದರೆ ಕೇವಲ ದೀಪಗಳನ್ನು ಬೆಳಗಿಸುವುದು ಅಥವಾ ನಮ್ಮ ಮನೆಗಳನ್ನು ಅಲಂಕರಿಸುವುದು ಮಾತ್ರವಲ್ಲ. ಪ್ರತಿದಿನವೂ ನಮ್ಮ ಬದುಕನ್ನು ಬೆಳಗಿಸುವ ಪ್ರೀತಿಯ ಜನರೊಂದಿಗೆ ಈ ಹಬ್ಬವನ್ನು ಆಚರಿಸುವುದು.</p>
       <p class="wish-message">Diwali is not just about lighting lamps or decorating our homes. It is about the people who make our lives brighter every single day.</p>
