@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&family=Noto+Serif+Devanagari:wght@400&display=swap');
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #100b0d; }
+button, a { -webkit-tap-highlight-color: transparent; }
+::selection { color: #240b16; background: #f5dfa8; }

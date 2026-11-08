@@ -1,0 +1,148 @@
+@if (introVisible()) {
+  <section class="intro" aria-label="Diwali introduction">
+    <div class="intro-grain"></div>
+    <div class="intro-orbit orbit-one"></div>
+    <div class="intro-orbit orbit-two"></div>
+    <div class="intro-diya" aria-hidden="true">
+      <span class="intro-flame"></span>
+      <span class="diya-bowl"></span>
+      <span class="diya-base"></span>
+    </div>
+    <div class="intro-copy">
+      <p class="eyebrow">A family celebration · 2026</p>
+      <h1>The festival<br /><em>of lights</em></h1>
+      <p class="intro-line">Something beautiful happens when<br class="desktop-only" /> we celebrate together.</p>
+      <button class="gold-button intro-button" type="button" (click)="enterCelebration()">
+        Enter the celebration <span>↗</span>
+      </button>
+    </div>
+    <button class="skip-button" type="button" (click)="enterCelebration()">Skip intro</button>
+  </section>
+}
+
+<main [class.is-hidden]="introVisible()">
+  <div class="ambient-sparks" aria-hidden="true">
+    @for (spark of sparks(); track spark.id) {
+      <span class="spark" [class.spark-amber]="spark.hue === 'amber'" [style.left.%]="spark.x" [style.top.%]="spark.y" [style.width.px]="spark.size" [style.height.px]="spark.size" [style.animation-delay.s]="spark.delay"></span>
+    }
+  </div>
+  <iframe
+    id="diwali-song"
+    class="youtube-song"
+    title="Diwali family celebration music"
+    src="https://www.youtube.com/embed/Qdib4LG_Wv0?enablejsapi=1&controls=0&loop=1&playlist=Qdib4LG_Wv0"
+    allow="autoplay; encrypted-media"
+    loading="lazy">
+  </iframe>
+
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Our Family home">
+      <span class="wordmark-mark">ॐ</span>
+      <span>Our Family <small>diwali 2026</small></span>
+    </a>
+    <div class="header-actions">
+      <button class="sound-toggle" type="button" (click)="toggleMusic()" [attr.aria-label]="musicOn() ? 'Mute ambient sound' : 'Play ambient sound'">
+        <span class="sound-bars" [class.is-playing]="musicOn()"><i></i><i></i><i></i><i></i></span>
+        {{ musicOn() ? 'Sound on' : 'Sound off' }}
+      </button>
+      <span class="header-rule"></span>
+      <span class="header-year">✦ 2026</span>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-moon"></div>
+    <div class="hero-temple-line" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow reveal-delay-1">To the ones who make every day brighter</p>
+      <p class="devanagari reveal-delay-2">ಶುಭ ದೀಪಾವಳಿ</p>
+      <h2 class="hero-title reveal-delay-3">Happy <em>Diwali</em></h2>
+      <p class="hero-subtitle reveal-delay-4">A celebration of light, love,<br class="mobile-only" /> happiness &amp; togetherness.</p>
+      <div class="hero-signature reveal-delay-5"><span></span> With love, from our family <b>♥</b> <span></span></div>
+    </div>
+    <div class="hero-diya diya-left" aria-hidden="true"><span class="flame"></span><span class="bowl"></span></div>
+    <div class="hero-diya diya-right" aria-hidden="true"><span class="flame"></span><span class="bowl"></span></div>
+    <a class="scroll-cue" href="#light-the-happiness"><span>Scroll to discover</span><i></i></a>
+  </section>
+
+  <section class="light-section section-pad" id="light-the-happiness">
+    <div class="section-intro">
+      <p class="eyebrow">The ritual of joy · 01</p>
+      <h2>Light up<br /><em>the happiness</em></h2>
+      <p>Every little light brings a little more happiness.<br />Make this moment glow, one diya at a time.</p>
+    </div>
+    <div class="diya-stage" [class.all-lit]="litDiyas().size === diyas.length">
+      <div class="rangoli" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      @for (diya of diyas; track diya) {
+        <button class="interactive-diya" [class.lit]="litDiyas().has(diya)" type="button" (click)="lightDiya(diya)" [attr.aria-label]="litDiyas().has(diya) ? 'Extinguish diya ' + (diya + 1) : 'Light diya ' + (diya + 1)">
+          <span class="diya-flame"><i></i></span><span class="diya-glow"></span><span class="diya-vessel"></span><span class="diya-shadow"></span>
+        </button>
+      }
+    </div>
+    <div class="light-controls">
+      <div class="counter"><strong>{{ litDiyas().size | number:'2.0-0' }}</strong><span>/ 07 diyas lit</span></div>
+      <div class="light-actions">
+        <button class="outline-button" type="button" (click)="celebrate('chakra')">Light chakra <span>◌</span></button>
+        <button class="outline-button" type="button" (click)="lightAll()">Light them all <span>✦</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wish-section section-pad">
+    <div class="wish-visual" aria-hidden="true">
+      <div class="wish-sun"></div><div class="wish-arch"></div><div class="wish-diya"><span class="flame"></span><span class="bowl"></span></div>
+      <p>ಬೆಳಕು</p>
+    </div>
+    <div class="wish-copy">
+      <p class="eyebrow">A note from the heart · 02</p>
+      <h2>A little light,<br /><em>a lot of love</em></h2>
+      <div class="gold-line"></div>
+      <p class="wish-kannada">ದೀಪಾವಳಿ ಎಂದರೆ ಕೇವಲ ದೀಪಗಳನ್ನು ಬೆಳಗಿಸುವುದು ಅಥವಾ ನಮ್ಮ ಮನೆಗಳನ್ನು ಅಲಂಕರಿಸುವುದು ಮಾತ್ರವಲ್ಲ. ಪ್ರತಿದಿನವೂ ನಮ್ಮ ಬದುಕನ್ನು ಬೆಳಗಿಸುವ ಪ್ರೀತಿಯ ಜನರೊಂದಿಗೆ ಈ ಹಬ್ಬವನ್ನು ಆಚರಿಸುವುದು.</p>
+      <p class="wish-message">Diwali is not just about lighting lamps or decorating our homes. It is about the people who make our lives brighter every single day.</p>
+      <p class="wish-kannada">ನಮ್ಮ ಪ್ರೀತಿಯ ಕುಟುಂಬಕ್ಕೆ, ಈ ಹಬ್ಬವು ಅಪಾರ ಸಂತೋಷ, ಉತ್ತಮ ಆರೋಗ್ಯ, ಶಾಂತಿ, ಸಮೃದ್ಧಿ ಮತ್ತು ಅನೇಕ ಸುಂದರ ನೆನಪುಗಳನ್ನು ತರಲಿ.</p>
+      <p class="wish-message">To our beloved family, may this festival bring endless happiness, good health, peace, prosperity and countless beautiful memories.</p>
+      <p class="wish-kannada">ನಮ್ಮ ಮನೆ ಸದಾ ನಗುವಿನಿಂದ, ಹೃದಯಗಳು ಪ್ರೀತಿಯಿಂದ ಮತ್ತು ಜೀವನವು ಆಚರಿಸಲು ಅನೇಕ ಕಾರಣಗಳಿಂದ ತುಂಬಿರಲಿ. ಜೀವನ ನಮ್ಮನ್ನು ಎಲ್ಲಿಗೆ ಕರೆದೊಯ್ದರೂ, ಕುಟುಂಬವೇ ನಮ್ಮ ಮಹಾನ್ ಆಶೀರ್ವಾದ.</p>
+      <p class="wish-message">May our home always be filled with laughter, our hearts with love, and our lives with countless reasons to celebrate.</p>
+      <p class="wish-message">No matter where life takes us, family will always be our greatest blessing.</p>
+      <p class="wish-kannada wish-kannada-close">ನಮ್ಮ ಸುಂದರ ಕುಟುಂಬಕ್ಕೆ ದೀಪಾವಳಿಯ ಹಾರ್ದಿಕ ಶುಭಾಶಯಗಳು! <b>♥</b></p>
+      <p class="wish-close">Happy Diwali to our beautiful family! <b>♥</b></p>
+    </div>
+  </section>
+
+  <section class="fireworks-section section-pad">
+    <div class="firework-copy">
+      <p class="eyebrow">A sky full of wishes · 03</p>
+      <h2>Let the night<br /><em>sparkle</em></h2>
+      <p>Every spark carries a wish.<br />Every burst, a memory we share.</p>
+      <div class="cracker-options" role="group" aria-label="Choose a cracker">
+        @for (cracker of crackerOptions; track cracker.type) {
+          <button class="cracker-option" [class.selected]="selectedCracker() === cracker.type" type="button" (click)="chooseCracker(cracker.type)" [attr.aria-pressed]="selectedCracker() === cracker.type">
+            <span>{{ cracker.icon }}</span>{{ cracker.label }}
+          </button>
+        }
+      </div>
+      <button class="gold-button" type="button" (click)="celebrate()">Light {{ selectedCracker() }} <span>✦</span></button>
+    </div>
+    <div class="sky" [class]="'sky cracker-' + selectedCracker()" aria-hidden="true">
+      <div class="star star-one"></div><div class="star star-two"></div><div class="star star-three"></div>
+      <div class="firework firework-one"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="firework firework-two"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="firework firework-three"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <footer class="finale section-pad">
+    <div class="finale-diya finale-diya-one"><span class="flame"></span><span class="bowl"></span></div>
+    <div class="finale-diya finale-diya-two"><span class="flame"></span><span class="bowl"></span></div>
+    <div class="finale-copy">
+      <p class="eyebrow">Until we gather again</p>
+      <h2>May our light<br /><em>never fade.</em></h2>
+      <p>May the light of Diwali guide us towards happiness, success and prosperity.<br />May our family always stay blessed, together and happy.</p>
+      <div class="finale-line"></div>
+      <h3>Wishing you all a very<br />Happy Diwali!</h3>
+      <p class="finale-signature">With love, Our Family <b>♥</b></p>
+      <button class="text-button" type="button" (click)="celebrate()">Celebrate again <span>↗</span></button>
+    </div>
+    <div class="footer-meta"><span>ॐ Our Family</span><span>Made with love &amp; light</span><span>Diwali 2026</span></div>
+  </footer>
+</main>
